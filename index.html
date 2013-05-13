@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Notification Example</title>
+
+    <script type="text/javascript" charset="utf-8" src="cordova-2.2.0.js"></script>
+    <script type="text/javascript" charset="utf-8">
+
+        // Wait for Cordova to load
+        //
+        document.addEventListener("deviceready", onDeviceReady, false);
+
+        // Cordova is ready
+        //
+        function onDeviceReady() {
+            // Empty
+        }
+
+        // Show a custom alert
+        //
+        function showAlert() {
+            navigator.notification.alert(
+            'You are the winner!',  // message
+            'Game Over',            // title
+            'Done'                  // buttonName
+        );
+        }
+
+        // Beep three times
+        //
+        function playBeep() {
+            navigator.notification.beep(3);
+        }
+
+        // Vibrate for 2 seconds
+        //
+        function vibrate() {
+            navigator.notification.vibrate(2000);
+        }
+            //Gets the geoLocation
+            function getGeoLocation() {
+                navigator.geolocation.getCurrentPosition(onSuccess, onError);
+            }
+            // onSuccess Geolocation
+            //
+            function onSuccess(position) {
+                var element = document.getElementById('geolocation');
+                element.innerHTML = 'Latitude: ' + position.coords.latitude + '<br />' +
+                            'Longitude: ' + position.coords.longitude + '<br />' +
+                            'Altitude: ' + position.coords.altitude + '<br />' +
+                            'Accuracy: ' + position.coords.accuracy + '<br />' +
+                            'Altitude Accuracy: ' + position.coords.altitudeAccuracy + '<br />' +
+                            'Heading: ' + position.coords.heading + '<br />' +
+                            'Speed: ' + position.coords.speed + '<br />' +
+                            'Timestamp: ' + position.timestamp + '<br />';
+            }
+
+            // onError Callback receives a PositionError object
+            //
+            function onError(error) {
+                alert('code: ' + error.code + '\n' +
+                'message: ' + error.message + '\n');
+            }
+
+            function getConnectionType() {
+                var networkState = navigator.connection.type;
+
+                var states = {};
+                states[Connection.UNKNOWN] = 'Unknown connection';
+                states[Connection.ETHERNET] = 'Ethernet connection';
+                states[Connection.WIFI] = 'WiFi connection';
+                states[Connection.CELL_2G] = 'Cell 2G connection';
+                states[Connection.CELL_3G] = 'Cell 3G connection';
+                states[Connection.CELL_4G] = 'Cell 4G connection';
+                states[Connection.NONE] = 'No network connection';
+
+                alert('Connection type: ' + states[networkState]);
+            }
+        
+    </script>
+  </head>
+  <body>
+    <p><button onclick="showAlert(); return false;"><h1>Notification Show Alert</h1></button></p>
+    <p><button onclick="playBeep(); return false;"><h1>Notification Play Beep</h1> </button></p>
+    <p><button onclick="vibrate(); return false;"><h1>Notification Vibrate</h1></button></p>
+    <p><button onclick="getGeoLocation();"><h1>Get Geo Location</h1></button></p>
+    <p><button onclick="getConnectionType(); return false;"><h1>Get Connection Type</h1></button></p>
+  </body>
+</html>
